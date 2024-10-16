@@ -54,21 +54,32 @@ const users = [
     tx_document: "12345678922",
     tx_name: "Teste de integração",
     tx_email: "Alberta.Weber@gmail.com",
-    wallets: [] // Adicionando wallets
+    wallets: [] 
   },
   {
     id_user: "v3jPQXjSkdb5aJeL2aLH42vXt",
     tx_document: "12345678901",
     tx_name: "Carlos Alberto da Silva",
     tx_email: "carlos.silva@gmail.com",
-    wallets: [] // Adicionando wallets
+    wallets: []
   },
   {
     id_user: "h7yVXWoNfZd2lTgI8cDL39yUh",
     tx_document: "98765432100",
     tx_name: "Maria Clara de Souza",
     tx_email: "maria.clara@gmail.com",
-    wallets: [] // Adicionando wallets
+    wallets: [ 
+      {
+        id_wallet: "cd67ea1f938a67309cde",
+        tx_name: "Carteira Itaú",
+        tx_document: "987.654.321-00"
+      },
+      {
+        id_wallet: "xy12ea1f93aa12309bce",
+        tx_name: "Carteira Banco do Brasil",
+        tx_document: "123.456.789-01"
+      }
+    ]
   }
 ];
 
