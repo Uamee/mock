@@ -114,24 +114,25 @@ app.get('/cms/v1/wallet-by-document', (req, res) => {
 // GET: list-users
 app.get('/cms/v1/list-users', (req, res) => {
   const email = req.query.email;
-  console.log(`Searching for users with email: ${email}`);
+  console.log(`Searching for user with email: ${email}`);
 
-  const filteredUsers = users.filter(user => user.tx_email === email);
+  // Filtra o primeiro usuário que corresponde ao email fornecido
+  const user = users.find(user => user.tx_email === email);
 
-  if (filteredUsers.length > 0) {
-    // Formatando o retorno para incluir "wallets"
-    const formattedUsers = filteredUsers.map(user => ({
+  if (user) {
+    // Formata o retorno para incluir "wallets"
+    const formattedUser = {
       id_user: user.id_user,
       document: user.tx_document,
       name: user.tx_name,
       wallets: user.wallets // Inclui a lista de wallets do usuário
-    }));
+    };
 
-    console.log('Users found:', formattedUsers);
-    res.json({ users: formattedUsers });
+    console.log('User found:', formattedUser);
+    res.json(formattedUser); // Retorna um único objeto de usuário
   } else {
-    console.log('No users found');
-    res.json({ users: [] });
+    console.log('No user found');
+    res.status(404).json({ message: 'User not found' }); // Retorna um erro 404 caso o usuário não seja encontrado
   }
 });
 
