@@ -53,24 +53,24 @@ const users = [
     id_user: "gzD68IiBTDm0taj-sALgEgHH",
     tx_document: "12345678922",
     tx_name: "Teste de integração",
-    tx_email: "Alberta.Weber@gmail.com"
+    tx_email: "Alberta.Weber@gmail.com",
+    wallets: [] // Adicionando wallets
   },
   {
     id_user: "v3jPQXjSkdb5aJeL2aLH42vXt",
     tx_document: "12345678901",
     tx_name: "Carlos Alberto da Silva",
-    tx_email: "carlos.silva@gmail.com"
+    tx_email: "carlos.silva@gmail.com",
+    wallets: [] // Adicionando wallets
   },
   {
     id_user: "h7yVXWoNfZd2lTgI8cDL39yUh",
     tx_document: "98765432100",
     tx_name: "Maria Clara de Souza",
-    tx_email: "maria.clara@gmail.com"
+    tx_email: "maria.clara@gmail.com",
+    wallets: [] // Adicionando wallets
   }
 ];
-
-// Variável local para armazenar os usuários vinculados a wallets
-let linkedUsers = [];
 
 // Middleware para logar cada requisição
 app.use((req, res, next) => {
@@ -108,8 +108,16 @@ app.get('/cms/v1/list-users', (req, res) => {
   const filteredUsers = users.filter(user => user.tx_email === email);
 
   if (filteredUsers.length > 0) {
-    console.log('Users found:', filteredUsers);
-    res.json({ users: filteredUsers });
+    // Formatando o retorno para incluir "wallets"
+    const formattedUsers = filteredUsers.map(user => ({
+      id_user: user.id_user,
+      document: user.tx_document,
+      name: user.tx_name,
+      wallets: user.wallets // Inclui a lista de wallets do usuário
+    }));
+
+    console.log('Users found:', formattedUsers);
+    res.json({ users: formattedUsers });
   } else {
     console.log('No users found');
     res.json({ users: [] });
@@ -131,7 +139,8 @@ app.post('/cms/v1/create-user', (req, res) => {
     investorName,
     investorDocument,
     investorDocumentType,
-    uid: 'r8jYP3f3KxX7dPG8Ebf61XyNwY53' // Gerado aleatoriamente
+    uid: 'r8jYP3f3KxX7dPG8Ebf61XyNwY53', // Gerado aleatoriamente
+    wallets: [] // Iniciando com uma lista de wallets vazia
   };
 
   console.log('User created:', newUser);
@@ -145,18 +154,33 @@ app.post('/cms/v1/link-user-to-wallet', (req, res) => {
   const { userId, walletId } = req.body;
   console.log(`Linking user ${userId} to wallet ${walletId}`);
 
-  // Verificar se o usuário já está vinculado a essa wallet
-  const isUserLinked = linkedUsers.some(link => link.userId === userId && link.walletId === walletId);
-
-  if (isUserLinked) {
-    console.log('User is already linked to wallet');
-    res.status(400).json({ error: "User is already linked to wallet" });
-  } else {
-    // Vincular usuário à wallet
-    linkedUsers.push({ userId, walletId });
-    console.log(`User ${userId} linked to wallet ${walletId}`);
-    res.json({ message: "User linked to wallet" });
+  // Encontrar o usuário pelo ID
+  const user = users.find(u => u.id_user === userId);
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
   }
+
+  // Encontrar a wallet pelo ID
+  const wallet = wallets.find(w => w.id_wallet === walletId);
+  if (!wallet) {
+    return res.status(404).json({ error: "Wallet not found" });
+  }
+
+  // Verificar se o usuário já está vinculado a essa wallet
+  const isWalletLinked = user.wallets.some(w => w.id_wallet === walletId);
+  if (isWalletLinked) {
+    return res.status(400).json({ error: "User is already linked to this wallet" });
+  }
+
+  // Vincular a wallet ao usuário
+  user.wallets.push({
+    id_wallet: wallet.id_wallet,
+    tx_name: wallet.tx_name,
+    tx_document: wallet.tx_document
+  });
+
+  console.log(`User ${userId} linked to wallet ${walletId}`);
+  res.json({ message: "User linked to wallet", user });
 });
 
 // Iniciar servidor
