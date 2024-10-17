@@ -202,7 +202,7 @@ app.post('/cms/v1/link-user-to-wallet', (req, res) => {
   // Verificar se o usuário já está vinculado a essa wallet
   const isWalletLinked = user.wallets.some(w => w.id_wallet === walletId);
   if (isWalletLinked) {
-    return res.status(400).json({ error: "User is already linked to this wallet" });
+    return res.status(400).json({ error: "Usuário já está vinculado a esta carteira." });
   }
 
   // Vincular a wallet ao usuário
@@ -213,7 +213,7 @@ app.post('/cms/v1/link-user-to-wallet', (req, res) => {
   });
 
   console.log(`User ${userId} linked to wallet ${walletId}`);
-  res.json({ message: "User linked to wallet", user });
+  res.json({ message: "Usuário vinculado a carteira com sucesso.", user });
 });
 
 // Iniciar servidor
