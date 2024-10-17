@@ -61,7 +61,18 @@ const users = [
     tx_document: "12345678901",
     tx_name: "Carlos Alberto da Silva",
     tx_email: "carlos.silva@gmail.com",
-    wallets: []
+    wallets: [ 
+      {
+        id_wallet: "cd67ea1f938a67309cde",
+        tx_name: "Carteira Itaú",
+        tx_document: "987.654.321-00"
+      },
+      {
+        id_wallet: "xy12ea1f93aa12309bce",
+        tx_name: "Carteira Banco do Brasil",
+        tx_document: "123.456.789-01"
+      }
+    ]
   },
   {
     id_user: "h7yVXWoNfZd2lTgI8cDL39yUh",
@@ -73,6 +84,16 @@ const users = [
         id_wallet: "cd67ea1f938a67309cde",
         tx_name: "Carteira Itaú",
         tx_document: "987.654.321-00"
+      },
+      {
+        id_wallet: "xy12ea1f93aa12309bce",
+        tx_name: "Carteira Banco do Brasil",
+        tx_document: "123.456.789-01"
+      },
+      {
+        id_wallet: "xy12ea1f93aa12309bce",
+        tx_name: "Carteira Banco do Brasil",
+        tx_document: "123.456.789-01"
       },
       {
         id_wallet: "xy12ea1f93aa12309bce",
