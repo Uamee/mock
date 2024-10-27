@@ -1,6 +1,10 @@
 const express = require('express');
+const morgan = require('morgan');
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Middleware to log HTTP requests
+app.use(morgan('combined')); // You can use 'dev' for shorter logs or 'combined' for detailed logs
 
 // Middleware to check Authorization header
 app.use((req, res, next) => {
