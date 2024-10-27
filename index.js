@@ -1,7 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = 3000;
+
+app.use(cors());
 
 // Middleware to log HTTP requests
 app.use(morgan('combined')); // You can use 'dev' for shorter logs or 'combined' for detailed logs
@@ -41,6 +43,6 @@ app.get('/api/v2/pool/:idpool/report/wallet/:idwallet', (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
 });
