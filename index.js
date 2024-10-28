@@ -32,7 +32,12 @@ app.get('/api/v2/pool/:idpool/report/wallet/:idwallet', (req, res) => {
             { name: "OnePager 2024 Q1", url: "https://example.com/report/2024-Q1.pdf" },
             { name: "OnePager 2024 Q2", url: "https://example.com/report/2024-Q2.pdf" }
         ];
-    } else {
+    } else if (year === '2023') {
+        reports = [
+            { name: "OnePager 2023 Q1", url: "https://example.com/report/2024-Q1.pdf" },
+        ];
+    }
+    else {
         reports = []; // Empty array for other years
     }
 
