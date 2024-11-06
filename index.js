@@ -49,7 +49,7 @@ app.get('/api/v2/pool/:idpool/report', (req, res) => {
     res.json({
         statusCode: 200,
         timestamp: new Date().toISOString(),
-        path: `/api/v2/pool/${idpool}/report/wallet/${idwallet}?year=${year}`,
+        path: `/api/v2/pool/${idpool}/report?year=${year}`,
         data: {
             years: years,
             reports: reports
