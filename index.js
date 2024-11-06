@@ -24,7 +24,7 @@ app.get('/api/v2/pool/:idpool/report/wallet/:idwallet', (req, res) => {
     const { idpool, idwallet } = req.params;
 
     // Define years and reports based on the year query parameter
-    const years = ['2023', '2024'];
+    const years = ['2024', '2023', '2022'];
     let reports = [];
 
     if (year === '2024') {
@@ -34,17 +34,26 @@ app.get('/api/v2/pool/:idpool/report/wallet/:idwallet', (req, res) => {
         ];
     } else if (year === '2023') {
         reports = [
-            { name: "OnePager 2023 Q1", url: "https://example.com/report/2024-Q1.pdf" },
+            { name: "OnePager 2023 Q1", url: "https://example.com/report/2023-Q1.pdf" },
         ];
-    }
-    else {
+    } else if (year === '2022') {
+        reports = [
+            { name: "One Pager 2022 Q1", url: "http://example.com/report2.pdf" },
+            { name: "One Pager 2022 Q4", url: "http://example.com/report1.pdf" }
+        ];
+    } else {
         reports = []; // Empty array for other years
     }
 
-    // Respond with the report
+    // Respond with the new structure
     res.json({
-        years: years,
-        reports: reports
+        statusCode: 200,
+        timestamp: new Date().toISOString(),
+        path: `/api/v2/pool/${idpool}/report/wallet/${idwallet}?year=${year}`,
+        data: {
+            years: years,
+            reports: reports
+        }
     });
 });
 
