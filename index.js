@@ -19,9 +19,9 @@ app.use((req, res, next) => {
 });
 
 // GET endpoint
-app.get('/api/v2/pool/:idpool/report/wallet/:idwallet', (req, res) => {
+app.get('/api/v2/pool/:idpool/report', (req, res) => {
     const { year } = req.query;
-    const { idpool, idwallet } = req.params;
+    const { idpool } = req.params;
 
     // Define years and reports based on the year query parameter
     const years = ['2024', '2023', '2022'];
